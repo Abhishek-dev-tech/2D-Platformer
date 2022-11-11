@@ -5,6 +5,7 @@
 
 #include "RenderWindow.h"
 #include "Entity.h"
+#include "Player.h"
 
 
 class AssertManager
@@ -15,15 +16,15 @@ public:
 
 	static AssertManager& GetInstance();
 
-	void LoadTextures(RenderWindow window);
+	void LoadTextures(RenderWindow& window);
 	void Update();
 	void SetEntity();
-	void Render(RenderWindow window);
+	void Render(RenderWindow& window);
 
-	//Player m_PlayerShip;
+	Player m_Player;
 
 private:
-	//SDL_Texture* playerShip;
+	SDL_Texture* m_PlayerTexture;
 
 
 };

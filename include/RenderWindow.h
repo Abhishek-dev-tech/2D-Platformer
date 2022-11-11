@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 
 #include "Entity.h"
+#include "Timer.h"
 
 
 class RenderWindow
@@ -14,11 +15,18 @@ public:
 	void cleanUp();
 	void clear();
 	void Render(Entity& p_entity, float angle);
+	void RenderAnimate(Entity& p_entity, float angle);
 	void RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor);
 	void display();
 	SDL_Renderer* GetRenderer();
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+
+	SDL_Rect m_AnimationSrc;
+
+	Timer m_AnimationTimer;
+
+	float m_MaxTime;
 
 };

@@ -11,24 +11,24 @@ AssertManager& AssertManager::GetInstance()
 	return *instance;
 }
 
-void AssertManager::LoadTextures(RenderWindow window)
+void AssertManager::LoadTextures(RenderWindow& window)
 {
-	//playerShip = window.loadTexture("res/GFX/PlayerShip.png");
+	m_PlayerTexture = window.loadTexture("res/gfx/Player_Idle.png");
 
 	SetEntity();
 }
 
 void AssertManager::SetEntity()
 {
-	//m_PlayerShip = Player(Vector2f(360, 650), playerShip, Vector2f(2.25, 2.25));
+	m_Player = Player(Vector2f(100, 100), Vector2f(1.5, 1.5), m_PlayerTexture);
 }
 
 void AssertManager::Update()
 {
-
+	m_Player.Update();
 }
 
-void AssertManager::Render(RenderWindow window)
+void AssertManager::Render(RenderWindow& window)
 {
-
+	window.RenderAnimate(m_Player, 0);
 }

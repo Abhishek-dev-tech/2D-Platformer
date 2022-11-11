@@ -16,6 +16,11 @@ RenderWindow::RenderWindow(const char* p_title, int x, int y, int p_w, int p_h)
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+
+	m_AnimationSrc.x = 0;
+	m_AnimationSrc.y = 0;
+	m_MaxTime = 0.035;
 }
 
 SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
@@ -54,7 +59,41 @@ void RenderWindow::Render(Entity& p_entity, float angle)
 	dst.w = src.w * p_entity.GetScale().x;
 	dst.h = src.h * p_entity.GetScale().y;
 
+
 	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, angle, NULL, SDL_FLIP_NONE);
+}
+
+void RenderWindow::RenderAnimate(Entity& p_entity, float angle)
+{
+
+	m_AnimationSrc.w = p_entity.getCurrentFrame().w;
+	m_AnimationSrc.h = p_entity.getCurrentFrame().h;
+
+	if (!m_AnimationTimer.IsStarted())
+		m_AnimationTimer.Start();
+
+	if (m_AnimationTimer.GetTicks() * 0.001 > m_MaxTime)
+	{
+		m_AnimationSrc.x += 32;
+
+		if (m_AnimationSrc.x >= p_entity.getCurrentFrame().w)
+			m_AnimationSrc.x = 0;
+
+		m_AnimationTimer.Stop();
+	}
+
+
+	m_AnimationSrc.w = 32;
+
+	SDL_Rect dst;
+	dst.x = p_entity.GetPos().x - m_AnimationSrc.w / 2 * p_entity.GetScale().x;
+	dst.y = p_entity.GetPos().y - m_AnimationSrc.h / 2 * p_entity.GetScale().y;
+	dst.w = m_AnimationSrc.w * p_entity.GetScale().x;
+	dst.h = m_AnimationSrc.h * p_entity.GetScale().y;
+
+
+
+	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_AnimationSrc, &dst, angle, NULL, SDL_FLIP_NONE);
 }
 
 void RenderWindow::RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor)

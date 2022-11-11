@@ -13,7 +13,6 @@ void Game::Init()
 		isRunning = true;
 	else
 		isRunning = false;
-
 	TTF_Init();
 
 	AssertManager::GetInstance().LoadTextures(window);
@@ -38,6 +37,8 @@ void Game::HandleEvent()
 	default:
 		break;
 	}
+
+	AssertManager::GetInstance().m_Player.HandleEvent(event);
 }
 
 void Game::Render()

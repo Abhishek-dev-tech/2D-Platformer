@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
+Entity::Entity(Vector2f p_pos, Vector2f p_scale, SDL_Texture* p_tex)
 	:pos(p_pos), tex(p_tex), scale(p_scale)
 {
 	SDL_QueryTexture(tex, NULL, NULL, &currentFrame.w, &currentFrame.h);
