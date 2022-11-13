@@ -22,6 +22,11 @@ void Entity::Update()
 	dst.h = GetScale().y * currentFrame.h;
 }
 
+void Entity::SetTexture(SDL_Texture* p_Texture)
+{
+	tex = p_Texture;
+}
+
 void Entity::SetPos(Vector2f _pos)
 {
 	pos = _pos;

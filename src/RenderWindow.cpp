@@ -44,7 +44,7 @@ void RenderWindow::clear()
 	SDL_RenderClear(renderer);
 }
 
-void RenderWindow::Render(Entity& p_entity, float angle)
+void RenderWindow::Render(Entity& p_entity, float p_Angle)
 {
 	SDL_Rect src;
 
@@ -60,10 +60,10 @@ void RenderWindow::Render(Entity& p_entity, float angle)
 	dst.h = src.h * p_entity.GetScale().y;
 
 
-	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, p_Angle, NULL, SDL_FLIP_NONE);
 }
 
-void RenderWindow::RenderAnimate(Entity& p_entity, float angle)
+void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip)
 {
 
 	m_AnimationSrc.w = p_entity.getCurrentFrame().w;
@@ -93,7 +93,7 @@ void RenderWindow::RenderAnimate(Entity& p_entity, float angle)
 
 
 
-	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_AnimationSrc, &dst, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_AnimationSrc, &dst, p_Angle, NULL, p_Flip);
 }
 
 void RenderWindow::RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor)

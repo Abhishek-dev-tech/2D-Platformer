@@ -25,6 +25,7 @@ public:
 	void Update();
 	void Destroy();
 	void SetDestroyFalse();
+	void SetTexture(SDL_Texture* p_Texture);
 
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();

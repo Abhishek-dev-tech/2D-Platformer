@@ -23,8 +23,12 @@ public:
 
 	Player m_Player;
 
-private:
-	SDL_Texture* m_PlayerTexture;
+	Entity m_Platform[5];
 
+	SDL_Texture* m_PlayerIdleTexture;
+	SDL_Texture* m_PlayerRunTexture;
+
+private:
+	SDL_Texture* m_PlatformTexture;
 
 };

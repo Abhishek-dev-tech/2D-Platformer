@@ -15,6 +15,7 @@ public:
 	void Init();
 	void HandleEvent();
 	void Update();
+	void CheckCollision();
 	void Render();
 	void Clean();
 
