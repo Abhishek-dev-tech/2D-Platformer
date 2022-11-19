@@ -26,6 +26,7 @@ public:
 	void Destroy();
 	void SetDestroyFalse();
 	void SetTexture(SDL_Texture* p_Texture);
+	void UpdateTexture();
 
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
@@ -42,4 +43,5 @@ private:
 	SDL_Texture* tex;
 
 	bool destroy;
+	bool m_Animate;
 };

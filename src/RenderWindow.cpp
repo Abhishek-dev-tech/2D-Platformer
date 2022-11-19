@@ -44,7 +44,7 @@ void RenderWindow::clear()
 	SDL_RenderClear(renderer);
 }
 
-void RenderWindow::Render(Entity& p_entity, float p_Angle)
+void RenderWindow::Render(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip)
 {
 	SDL_Rect src;
 
@@ -60,12 +60,11 @@ void RenderWindow::Render(Entity& p_entity, float p_Angle)
 	dst.h = src.h * p_entity.GetScale().y;
 
 
-	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, p_Angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, p_Angle, NULL, p_Flip);
 }
 
 void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip)
 {
-
 	m_AnimationSrc.w = p_entity.getCurrentFrame().w;
 	m_AnimationSrc.h = p_entity.getCurrentFrame().h;
 
@@ -82,7 +81,6 @@ void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_Rend
 		m_AnimationTimer.Stop();
 	}
 
-
 	m_AnimationSrc.w = 32;
 
 	SDL_Rect dst;
@@ -90,8 +88,6 @@ void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_Rend
 	dst.y = p_entity.GetPos().y - m_AnimationSrc.h / 2 * p_entity.GetScale().y;
 	dst.w = m_AnimationSrc.w * p_entity.GetScale().x;
 	dst.h = m_AnimationSrc.h * p_entity.GetScale().y;
-
-
 
 	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_AnimationSrc, &dst, p_Angle, NULL, p_Flip);
 }

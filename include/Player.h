@@ -25,12 +25,20 @@ public:
 	void ChangeTextureBasedOnAnimation();
 	void SetPlayerGravity(float p_Gravity);
 	void PlayerJump();
+	void SetPlayerGrounded(bool p_Grounded);
 
+	bool IsPlayerJumped();
+	bool IsPlayerFalling();
+	bool IsPlayerGrounded();
 	SDL_RendererFlip GetRendererFlip();
 
 private:
 	float m_Speed;
 	float m_Gravity;
+
+	bool m_Jumped;
+	bool m_Falling;
+	bool m_Grounded;
 
 	AnimationState m_AnimationState;
 

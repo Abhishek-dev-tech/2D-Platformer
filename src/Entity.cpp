@@ -16,10 +16,18 @@ Entity::Entity(Vector2f p_pos, Vector2f p_scale, SDL_Texture* p_tex)
 
 void Entity::Update()
 {
-	dst.x = GetPos().x - currentFrame.w / 2 * GetScale().x;
-	dst.y = GetPos().y - currentFrame.h / 2 * GetScale().y;
+	dst.x = GetPos().x - currentFrame.w / 2.0 * GetScale().x;
+	dst.y = GetPos().y - currentFrame.h / 2.0 * GetScale().y;
 	dst.w = GetScale().x * currentFrame.w;
 	dst.h = GetScale().y * currentFrame.h;
+}
+
+void Entity::UpdateTexture()
+{
+	SDL_QueryTexture(tex, NULL, NULL, &currentFrame.w, &currentFrame.h);
+
+	currentFrame.x = 0;
+	currentFrame.y = 0;
 }
 
 void Entity::SetTexture(SDL_Texture* p_Texture)

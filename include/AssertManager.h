@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #include "RenderWindow.h"
 #include "Entity.h"
@@ -27,6 +29,8 @@ public:
 
 	SDL_Texture* m_PlayerIdleTexture;
 	SDL_Texture* m_PlayerRunTexture;
+	SDL_Texture* m_PlayerJumpTexture;
+	SDL_Texture* m_PlayerFallTexture;
 
 private:
 	SDL_Texture* m_PlatformTexture;

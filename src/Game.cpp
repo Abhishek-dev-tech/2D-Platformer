@@ -48,9 +48,14 @@ void Game::CheckCollision()
 {
 	for (int i = 0; i < 5; i++)
 	{
-		if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(), &AssertManager::GetInstance().m_Platform[i].GetDst()))
+		if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(), &AssertManager::GetInstance().m_Platform[i].GetDst()) && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
 		{
 			AssertManager::GetInstance().m_Player.SetPos(Vector2f(AssertManager::GetInstance().m_Player.GetPos().x, AssertManager::GetInstance().m_Platform[i].GetPos().y - AssertManager::GetInstance().m_Platform[i].GetDst().h / 2 - AssertManager::GetInstance().m_Player.GetDst().h / 2));
+			AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
+		}
+		else
+		{
+			AssertManager::GetInstance().m_Player.SetPlayerGrounded(false);
 		}
 	}
 }

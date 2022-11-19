@@ -15,6 +15,8 @@ void AssertManager::LoadTextures(RenderWindow& window)
 {
 	m_PlayerIdleTexture = window.loadTexture("res/gfx/Player_Idle.png");
 	m_PlayerRunTexture = window.loadTexture("res/gfx/Player_Run.png");
+	m_PlayerJumpTexture = window.loadTexture("res/gfx/Player_Jump.png");
+	m_PlayerFallTexture = window.loadTexture("res/gfx/Player_Fall.png");
 
 	m_PlatformTexture = window.loadTexture("res/gfx/Platform.png");
 
@@ -43,8 +45,11 @@ void AssertManager::Update()
 
 void AssertManager::Render(RenderWindow& window)
 {
-	window.RenderAnimate(m_Player, 0, m_Player.GetRendererFlip());
+	if (!m_Player.IsPlayerJumped() && !m_Player.IsPlayerJumped() && m_Player.IsPlayerGrounded())
+		window.RenderAnimate(m_Player, 0, m_Player.GetRendererFlip());
+	else if(!m_Player.IsPlayerGrounded())
+		window.Render(m_Player, 0, m_Player.GetRendererFlip());
 
 	for (int i = 0; i < 5; i++)
-		window.Render(m_Platform[i], 0);
+		window.Render(m_Platform[i], 0, SDL_FLIP_NONE);
 }
