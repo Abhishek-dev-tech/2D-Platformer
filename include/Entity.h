@@ -22,7 +22,6 @@ public:
 
 	void SetPos(Vector2f pos);
 	void SetScale(Vector2f scale);
-	void Update();
 	void Destroy();
 	void SetDestroyFalse();
 	void SetTexture(SDL_Texture* p_Texture);
@@ -31,7 +30,7 @@ public:
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
 	SDL_Rect& GetDst();
-	
+
 	bool IsDestroy();
 
 private:
@@ -39,9 +38,9 @@ private:
 	Vector2f scale;
 
 	SDL_Rect currentFrame;
-	SDL_Rect dst;
+	SDL_Rect m_Dst;
+
 	SDL_Texture* tex;
 
 	bool destroy;
-	bool m_Animate;
 };

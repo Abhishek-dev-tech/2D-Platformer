@@ -11,15 +11,10 @@ Entity::Entity(Vector2f p_pos, Vector2f p_scale, SDL_Texture* p_tex)
 	currentFrame.x = 0;
 	currentFrame.y = 0;
 
-	destroy = false;
-}
+	m_Dst.w = 0;
+	m_Dst.h = 0;
 
-void Entity::Update()
-{
-	dst.x = GetPos().x - currentFrame.w / 2.0 * GetScale().x;
-	dst.y = GetPos().y - currentFrame.h / 2.0 * GetScale().y;
-	dst.w = GetScale().x * currentFrame.w;
-	dst.h = GetScale().y * currentFrame.h;
+	destroy = false;
 }
 
 void Entity::UpdateTexture()
@@ -67,7 +62,7 @@ SDL_Rect Entity::getCurrentFrame()
 
 SDL_Rect& Entity::GetDst()
 {
-	return dst;
+	return m_Dst;
 }
 
 bool Entity::IsDestroy()

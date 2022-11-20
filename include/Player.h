@@ -31,6 +31,8 @@ public:
 	bool IsPlayerFalling();
 	bool IsPlayerGrounded();
 	SDL_RendererFlip GetRendererFlip();
+	AnimationState GetAnimationState();
+
 
 private:
 	float m_Speed;

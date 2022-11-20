@@ -17,10 +17,6 @@ Player::Player(Vector2f p_pos, Vector2f p_scale, SDL_Texture* p_tex)
 
 void Player::Update()
 {
-	Entity::Update();
-
-	ChangeTextureBasedOnAnimation();
-
 	SetPos(Vector2f(GetPos().x, GetPos().y + m_Gravity));
 
 	m_Gravity = m_Gravity >= 4 ? 4 : m_Gravity + 0.1;
@@ -28,13 +24,13 @@ void Player::Update()
 	if (m_Gravity >= 0 && !m_Grounded)
 	{
 		ChangeAnimationState(Fall);
+
 		m_Jumped = false;
 		m_Falling = true;
 	}
 	else
 		m_Falling = false;
 
-	std::cout << "jump: " << m_Jumped << "  Fall: " << m_Falling << "  Grounded: " << m_Grounded << std::endl;
 }
 
 void Player::HandleEvent(SDL_Event event)
@@ -110,6 +106,7 @@ void Player::ChangeTextureBasedOnAnimation()
 void Player::ChangeAnimationState(AnimationState p_AnimationState)
 {
 	m_AnimationState = p_AnimationState;
+	ChangeTextureBasedOnAnimation();
 }
 
 void Player::SetPlayerGravity(float p_Gravity)
@@ -120,6 +117,11 @@ void Player::SetPlayerGravity(float p_Gravity)
 void Player::SetPlayerGrounded(bool p_Grounded)
 {
 	m_Grounded = p_Grounded;
+}
+
+AnimationState Player::GetAnimationState()
+{
+	return m_AnimationState;
 }
 
 SDL_RendererFlip Player::GetRendererFlip()

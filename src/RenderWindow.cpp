@@ -44,26 +44,24 @@ void RenderWindow::clear()
 	SDL_RenderClear(renderer);
 }
 
-void RenderWindow::Render(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip)
+void RenderWindow::Render(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip, SDL_Rect& p_Dst)
 {
-	SDL_Rect src;
+	m_Src.x = 0;
+	m_Src.y = 0;
+	m_Src.w = p_entity.getCurrentFrame().w;
+	m_Src.h = p_entity.getCurrentFrame().h;
 
-	src.x = 0;
-	src.y = 0;
-	src.w = p_entity.getCurrentFrame().w;
-	src.h = p_entity.getCurrentFrame().h;
+	m_Dst.x = p_entity.GetPos().x - m_Src.w / 2 * p_entity.GetScale().x;
+	m_Dst.y = p_entity.GetPos().y - m_Src.h / 2 * p_entity.GetScale().y;
+	m_Dst.w = m_Src.w * p_entity.GetScale().x;
+	m_Dst.h = m_Src.h * p_entity.GetScale().y;
 
-	SDL_Rect dst;
-	dst.x = p_entity.GetPos().x - src.w / 2 * p_entity.GetScale().x;
-	dst.y = p_entity.GetPos().y - src.h / 2 * p_entity.GetScale().y;
-	dst.w = src.w * p_entity.GetScale().x;
-	dst.h = src.h * p_entity.GetScale().y;
+	p_Dst = m_Dst;
 
-
-	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, p_Angle, NULL, p_Flip);
+	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_Src, &m_Dst, p_Angle, NULL, p_Flip);
 }
 
-void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip)
+void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip, SDL_Rect& p_Dst)
 {
 	m_AnimationSrc.w = p_entity.getCurrentFrame().w;
 	m_AnimationSrc.h = p_entity.getCurrentFrame().h;
@@ -83,13 +81,14 @@ void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_Rend
 
 	m_AnimationSrc.w = 32;
 
-	SDL_Rect dst;
-	dst.x = p_entity.GetPos().x - m_AnimationSrc.w / 2 * p_entity.GetScale().x;
-	dst.y = p_entity.GetPos().y - m_AnimationSrc.h / 2 * p_entity.GetScale().y;
-	dst.w = m_AnimationSrc.w * p_entity.GetScale().x;
-	dst.h = m_AnimationSrc.h * p_entity.GetScale().y;
+	m_Dst.x = p_entity.GetPos().x - m_AnimationSrc.w / 2 * p_entity.GetScale().x;
+	m_Dst.y = p_entity.GetPos().y - m_AnimationSrc.h / 2 * p_entity.GetScale().y;
+	m_Dst.w = m_AnimationSrc.w * p_entity.GetScale().x;
+	m_Dst.h = m_AnimationSrc.h * p_entity.GetScale().y;
 
-	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_AnimationSrc, &dst, p_Angle, NULL, p_Flip);
+	p_Dst = m_Dst;
+
+	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_AnimationSrc, &m_Dst, p_Angle, NULL, p_Flip);
 }
 
 void RenderWindow::RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor)
@@ -97,25 +96,20 @@ void RenderWindow::RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font
 	SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, p_text.c_str(), textColor);
 	SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
 
-	SDL_Rect src;
+	m_Src.x = 0;
+	m_Src.y = 0;
+	m_Src.w = surfaceMessage->w;
+	m_Src.h = surfaceMessage->h;
 
-	src.x = 0;
-	src.y = 0;
-	src.w = surfaceMessage->w;
-	src.h = surfaceMessage->h;
+	m_Dst.x = p_pos.x - m_Src.w / 2;
+	m_Dst.y = p_pos.y - m_Src.h / 2;
+	m_Dst.w = m_Src.w;
+	m_Dst.h = m_Src.h;
 
-	SDL_Rect dst;
-	dst.x = p_pos.x - src.w / 2;
-	dst.y = p_pos.y - src.h / 2;
-	dst.w = src.w;
-	dst.h = src.h;
-
-	SDL_RenderCopy(renderer, message, &src, &dst);
+	SDL_RenderCopy(renderer, message, &m_Src, &m_Dst);
 	SDL_FreeSurface(surfaceMessage);
 	SDL_DestroyTexture(message);
 }
-
-
 
 void RenderWindow::display()
 {

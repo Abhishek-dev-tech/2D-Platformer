@@ -7,6 +7,7 @@
 
 #include "RenderWindow.h"
 #include "Entity.h"
+#include "Mathf.h"
 #include "Player.h"
 
 
@@ -25,7 +26,8 @@ public:
 
 	Player m_Player;
 
-	Entity m_Platform[5];
+	Entity m_Platform;
+	Entity m_Top_Bottom_OutlinePlatform[9];
 
 	SDL_Texture* m_PlayerIdleTexture;
 	SDL_Texture* m_PlayerRunTexture;
@@ -34,5 +36,6 @@ public:
 
 private:
 	SDL_Texture* m_PlatformTexture;
+	SDL_Texture* m_Top_Bottom_OutlinePlatformTexture;
 
 };
