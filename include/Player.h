@@ -35,6 +35,9 @@ public:
 
 
 private:
+	int m_JumpCounter;
+	int m_MaxGravity;
+
 	float m_Speed;
 	float m_Gravity;
 

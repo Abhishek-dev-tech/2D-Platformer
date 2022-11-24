@@ -46,29 +46,22 @@ void Game::HandleEvent()
 
 void Game::CheckCollision()
 {
-	if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(), &AssertManager::GetInstance().m_Platform.GetDst()) && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
+	if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(),
+		&AssertManager::GetInstance().m_Platform.GetDst()) && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
 	{
 		AssertManager::GetInstance().m_Player.SetPos(Vector2f(AssertManager::GetInstance().m_Player.GetPos().x, AssertManager::GetInstance().m_Platform.GetPos().y - AssertManager::GetInstance().m_Platform.GetDst().h / 2 - AssertManager::GetInstance().m_Player.GetDst().h / 2));
 		AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
-		return;
-
 	}
-	
-	for (int i = 0; i < 9; i++)
+	else if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(),
+		&AssertManager::GetInstance().m_Top_Bottom_OutlinePlatform.GetDst()) && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
 	{
-		if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(),
-			&AssertManager::GetInstance().m_Top_Bottom_OutlinePlatform[i].GetDst()) && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
-		{
-			AssertManager::GetInstance().m_Player.SetPos(Vector2f(AssertManager::GetInstance().m_Player.GetPos().x, AssertManager::GetInstance().m_Top_Bottom_OutlinePlatform[i].GetPos().y - AssertManager::GetInstance().m_Top_Bottom_OutlinePlatform[i].GetDst().h / 2 - AssertManager::GetInstance().m_Player.GetDst().h / 2));
-			AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
-
-		}
-		else
-		{
-			AssertManager::GetInstance().m_Player.SetPlayerGrounded(false);
-		}
+		AssertManager::GetInstance().m_Player.SetPos(Vector2f(AssertManager::GetInstance().m_Player.GetPos().x, AssertManager::GetInstance().m_Top_Bottom_OutlinePlatform.GetPos().y - AssertManager::GetInstance().m_Top_Bottom_OutlinePlatform.GetDst().h / 2 - AssertManager::GetInstance().m_Player.GetDst().h / 2 + 1));
+		AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
 	}
-	
+	else
+	{
+		AssertManager::GetInstance().m_Player.SetPlayerGrounded(false);
+	}	
 }
 
 void Game::Render()

@@ -27,11 +27,12 @@ public:
 	Player m_Player;
 
 	Entity m_Platform;
-	Entity m_Top_Bottom_OutlinePlatform[9];
+	Entity m_Top_Bottom_OutlinePlatform;
 
 	SDL_Texture* m_PlayerIdleTexture;
 	SDL_Texture* m_PlayerRunTexture;
 	SDL_Texture* m_PlayerJumpTexture;
+	SDL_Texture* m_PlayerDoubleJumpTexture;
 	SDL_Texture* m_PlayerFallTexture;
 
 private:

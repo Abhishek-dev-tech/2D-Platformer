@@ -5,7 +5,10 @@ Player::Player(Vector2f p_pos, Vector2f p_scale, SDL_Texture* p_tex)
 	:Entity(p_pos, p_scale, p_tex)
 {
 	m_Speed = 1.5;
-	m_Gravity = 4;
+	m_JumpCounter = 2;
+	m_MaxGravity = 6;
+	m_Gravity = m_MaxGravity;
+
 
 	m_Jumped = false;
 	m_Falling = false;
@@ -19,7 +22,7 @@ void Player::Update()
 {
 	SetPos(Vector2f(GetPos().x, GetPos().y + m_Gravity));
 
-	m_Gravity = m_Gravity >= 4 ? 4 : m_Gravity + 0.1;
+	m_Gravity = m_Gravity >= m_MaxGravity ? m_MaxGravity : m_Gravity + 0.2;
 
 	if (m_Gravity >= 0 && !m_Grounded)
 	{
@@ -30,7 +33,9 @@ void Player::Update()
 	}
 	else
 		m_Falling = false;
-
+	
+	if(m_Grounded && !m_Jumped)
+		m_JumpCounter = 2;
 }
 
 void Player::HandleEvent(SDL_Event event)
@@ -44,7 +49,7 @@ void Player::HandleEvent(SDL_Event event)
 	else if (!m_Jumped && !m_Falling && m_Grounded)
 		ChangeAnimationState(Idle);
 	
-	if (currentKeyStates[SDL_SCANCODE_SPACE] && !m_Jumped)
+	if (currentKeyStates[SDL_SCANCODE_SPACE] && !m_Jumped && m_JumpCounter > 0)
 		PlayerJump();
 }
 
@@ -63,10 +68,18 @@ void Player::Movement(int p_Dir)
 
 void Player::PlayerJump()
 {
-	m_Gravity = -4;
-	ChangeAnimationState(Jump);
+	if(m_JumpCounter == 2)
+		ChangeAnimationState(Jump);
+	else if (m_JumpCounter == 1)
+		ChangeAnimationState(DoubleJump);
+
+	m_Gravity = -6;
+
 	m_Jumped = true;
 	m_Falling = false;
+
+	m_JumpCounter--;
+
 }
 
 void Player::ChangeTextureBasedOnAnimation()
@@ -89,7 +102,7 @@ void Player::ChangeTextureBasedOnAnimation()
 		break;
 
 	case DoubleJump:
-		SetTexture(AssertManager::GetInstance().m_PlayerFallTexture);
+		SetTexture(AssertManager::GetInstance().m_PlayerDoubleJumpTexture);
 		UpdateTexture();
 		break;
 
