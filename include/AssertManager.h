@@ -29,11 +29,29 @@ public:
 	Entity m_Platform;
 	Entity m_Top_Bottom_OutlinePlatform;
 
+	Entity m_Apple;
+	Entity m_Bananas;
+	Entity m_Cherries;
+	Entity m_Kiwi;
+	Entity m_Melon;
+	Entity m_Orange;
+	Entity m_Pineapple;
+	Entity m_Strawberry;
+
 	SDL_Texture* m_PlayerIdleTexture;
 	SDL_Texture* m_PlayerRunTexture;
 	SDL_Texture* m_PlayerJumpTexture;
 	SDL_Texture* m_PlayerDoubleJumpTexture;
 	SDL_Texture* m_PlayerFallTexture;
+
+	SDL_Texture* m_AppleTexture;
+	SDL_Texture* m_BananasTexture;
+	SDL_Texture* m_CherriesTexture;
+	SDL_Texture* m_KiwiTexture;
+	SDL_Texture* m_MelonTexture;
+	SDL_Texture* m_OrangeTexture;
+	SDL_Texture* m_PineappleTexture;
+	SDL_Texture* m_StrawberryTexture;
 
 private:
 	SDL_Texture* m_PlatformTexture;
