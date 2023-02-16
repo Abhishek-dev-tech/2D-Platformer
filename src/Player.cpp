@@ -36,6 +36,8 @@ void Player::Update()
 	
 	if(m_Grounded && !m_Jumped)
 		m_JumpCounter = 2;
+
+	std::cout << "Grounded: " << m_Grounded << " Jumped: " << m_Jumped<< " Falling: " << m_Falling << std::endl;
 }
 
 void Player::HandleEvent(SDL_Event event)
@@ -161,5 +163,3 @@ void Player::Render(RenderWindow& window)
 {
 
 }
-
-

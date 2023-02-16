@@ -27,16 +27,7 @@ public:
 	Player m_Player;
 
 	Entity m_Platform;
-	Entity m_Top_Bottom_OutlinePlatform;
-
-	Entity m_Apple;
-	Entity m_Bananas;
-	Entity m_Cherries;
-	Entity m_Kiwi;
-	Entity m_Melon;
-	Entity m_Orange;
-	Entity m_Pineapple;
-	Entity m_Strawberry;
+	Entity m_Bottom_PlatformOutline;
 
 	SDL_Texture* m_PlayerIdleTexture;
 	SDL_Texture* m_PlayerRunTexture;
