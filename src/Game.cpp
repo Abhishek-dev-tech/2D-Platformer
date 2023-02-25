@@ -46,35 +46,49 @@ void Game::HandleEvent()
 
 void Game::CheckCollision()
 {
+	float playerX = AssertManager::GetInstance().m_Player.GetPos().x;
+	float playerY = AssertManager::GetInstance().m_Player.GetPos().y;
+
+	int playerW = AssertManager::GetInstance().m_Player.GetDst().w;
+	int playerH = AssertManager::GetInstance().m_Player.GetDst().h;
+
+	Vector2f playerPos = Vector2f(playerX, playerY);
+
 
 	if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(),
-		&AssertManager::GetInstance().m_Platform.GetDst()))
-	{
-		if (!AssertManager::GetInstance().m_Player.IsPlayerJumped()
-			&& AssertManager::GetInstance().m_Player.GetPos().y + AssertManager::GetInstance().m_Player.GetDst().h / 2 <= AssertManager::GetInstance().m_Platform.GetPos().y)
-		{
-			AssertManager::GetInstance().m_Player.SetPos(Vector2f(AssertManager::GetInstance().m_Player.GetPos().x, AssertManager::GetInstance().m_Platform.GetPos().y - AssertManager::GetInstance().m_Platform.GetDst().h / 2 - AssertManager::GetInstance().m_Player.GetDst().h / 2));
-			AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
-		}
-		else if (AssertManager::GetInstance().m_Player.GetPos().y + AssertManager::GetInstance().m_Player.GetDst().h / 2 >= AssertManager::GetInstance().m_Platform.GetPos().y)
-		{
-			AssertManager::GetInstance().m_Player.SetPos(Vector2f(AssertManager::GetInstance().m_Platform.GetPos().x + AssertManager::GetInstance().m_Platform.GetDst().w / 2 + AssertManager::GetInstance().m_Player.GetDst().w / 2, AssertManager::GetInstance().m_Platform.GetPos().y + AssertManager::GetInstance().m_Platform.GetDst().h / 2 - AssertManager::GetInstance().m_Player.GetDst().h / 2));
-			AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
-
-		}
-		
-	}
-
-	else if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(),
 		&AssertManager::GetInstance().m_Bottom_PlatformOutline.GetDst()) && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
 	{
-		AssertManager::GetInstance().m_Player.SetPos(Vector2f(AssertManager::GetInstance().m_Player.GetPos().x, AssertManager::GetInstance().m_Bottom_PlatformOutline.GetPos().y - AssertManager::GetInstance().m_Bottom_PlatformOutline.GetDst().h / 2 - AssertManager::GetInstance().m_Player.GetDst().h / 2 + 1));
+		playerPos = Vector2f(playerX, AssertManager::GetInstance().m_Bottom_PlatformOutline.GetPos().y - AssertManager::GetInstance().m_Bottom_PlatformOutline.GetDst().h / 2 - playerH / 2 + 1);
 		AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
 	}
 	else
 	{
 		AssertManager::GetInstance().m_Player.SetPlayerGrounded(false);
 	}
+
+	if (Collision::IsCollide(&AssertManager::GetInstance().m_Player.GetDst(),
+		&AssertManager::GetInstance().m_Platform.GetDst()))
+	{
+		if (playerX + playerW / 2 - 4 < AssertManager::GetInstance().m_Platform.GetPos().x - AssertManager::GetInstance().m_Platform.GetDst().w / 2)
+			playerPos = Vector2f(AssertManager::GetInstance().m_Platform.GetPos().x - AssertManager::GetInstance().m_Platform.GetDst().w / 2 - playerW / 2 - 1, playerPos.y);
+		
+		else if (playerX - playerW / 2 + 4 > AssertManager::GetInstance().m_Platform.GetPos().x + AssertManager::GetInstance().m_Platform.GetDst().w / 2)
+			playerPos = Vector2f(AssertManager::GetInstance().m_Platform.GetPos().x + AssertManager::GetInstance().m_Platform.GetDst().w / 2 + playerW / 2 + 1, playerPos.y);
+
+
+		if (playerY + playerH / 2 - 10 < AssertManager::GetInstance().m_Platform.GetPos().y - AssertManager::GetInstance().m_Platform.GetDst().h / 2 && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
+		{
+			playerPos = Vector2f(playerX, AssertManager::GetInstance().m_Platform.GetPos().y - AssertManager::GetInstance().m_Platform.GetDst().h / 2 - playerH / 2);
+			AssertManager::GetInstance().m_Player.SetPlayerGrounded(true);
+		}
+
+		else if (playerY < AssertManager::GetInstance().m_Platform.GetPos().y + AssertManager::GetInstance().m_Platform.GetDst().h / 2 - playerH / 2 && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
+			playerPos = Vector2f(playerX, AssertManager::GetInstance().m_Platform.GetPos().y + AssertManager::GetInstance().m_Platform.GetDst().h / 2 - playerH / 2);
+
+	}
+	
+
+	AssertManager::GetInstance().m_Player.SetPos(playerPos);
 }
 
 void Game::Render()
