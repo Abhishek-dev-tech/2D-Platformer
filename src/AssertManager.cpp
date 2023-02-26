@@ -25,10 +25,7 @@ void AssertManager::LoadTextures(RenderWindow& window)
 	m_AppleTexture = window.loadTexture("res/gfx/fruits/Apple.png");
 	m_BananasTexture = window.loadTexture("res/gfx/fruits/Bananas.png");
 	m_CherriesTexture = window.loadTexture("res/gfx/fruits/Cherries.png");
-	m_KiwiTexture = window.loadTexture("res/gfx/fruits/Kiwi.png");
 	m_MelonTexture = window.loadTexture("res/gfx/fruits/Melon.png");
-	m_OrangeTexture = window.loadTexture("res/gfx/fruits/Orange.png");
-	m_PineappleTexture = window.loadTexture("res/gfx/fruits/Pineapple.png");
 	m_StrawberryTexture = window.loadTexture("res/gfx/fruits/Strawberry.png");
 
 	SetEntity();

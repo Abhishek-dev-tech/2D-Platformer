@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "RenderWindow.h"
 #include "Collision.h"
+#include "ObjectSpawner.h"
 
 Game::Game()
 	:window("GAME v1.0", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 900, 525)
@@ -84,7 +85,6 @@ void Game::CheckCollision()
 
 		else if (playerY < AssertManager::GetInstance().m_Platform.GetPos().y + AssertManager::GetInstance().m_Platform.GetDst().h / 2 - playerH / 2 && !AssertManager::GetInstance().m_Player.IsPlayerJumped())
 			playerPos = Vector2f(playerX, AssertManager::GetInstance().m_Platform.GetPos().y + AssertManager::GetInstance().m_Platform.GetDst().h / 2 - playerH / 2);
-
 	}
 	
 
@@ -96,6 +96,7 @@ void Game::Render()
 	window.clear();
 
 	AssertManager::GetInstance().Render(window);
+	ObjectSpawner::GetInstance().Render(window);
 
 	window.display();
 }

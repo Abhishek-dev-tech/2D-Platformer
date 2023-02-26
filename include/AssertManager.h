@@ -38,10 +38,7 @@ public:
 	SDL_Texture* m_AppleTexture;
 	SDL_Texture* m_BananasTexture;
 	SDL_Texture* m_CherriesTexture;
-	SDL_Texture* m_KiwiTexture;
 	SDL_Texture* m_MelonTexture;
-	SDL_Texture* m_OrangeTexture;
-	SDL_Texture* m_PineappleTexture;
 	SDL_Texture* m_StrawberryTexture;
 
 private:
