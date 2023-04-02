@@ -4,8 +4,6 @@
 #include "Entity.h"
 #include "Game.h" 
 
-Game game;
-
 int main(int argc, char* args[])
 {
 	const int fps = 120;
@@ -13,6 +11,8 @@ int main(int argc, char* args[])
 
 	Uint32 frameStart;
 	int frameTime;
+
+	Game game;
 
 	game.Init();
 

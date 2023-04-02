@@ -23,6 +23,7 @@ public:
 	void SetPos(Vector2f pos);
 	void SetScale(Vector2f scale);
 	void Destroy();
+	void Destroy(float p_Time);
 	void SetDestroyFalse();
 	void SetTexture(SDL_Texture* p_Texture);
 	void UpdateTexture();

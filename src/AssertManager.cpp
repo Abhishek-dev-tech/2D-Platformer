@@ -28,6 +28,8 @@ void AssertManager::LoadTextures(RenderWindow& window)
 	m_MelonTexture = window.loadTexture("res/gfx/fruits/Melon.png");
 	m_StrawberryTexture = window.loadTexture("res/gfx/fruits/Strawberry.png");
 
+	m_FruitsCollectedTexture = window.loadTexture("res/gfx/Collected.png");
+
 	SetEntity();
 }
 
@@ -35,14 +37,47 @@ void AssertManager::SetEntity()
 {
 	m_Player = Player(Vector2f(300, 100), Vector2f(1.5, 1.5), m_PlayerIdleTexture);
 	
-	m_Platform = Entity(Vector2f(150, 460), Vector2f(2, 2), m_PlatformTexture);
+	m_Platform[0] = Entity(Vector2f(150, 460), Vector2f(2, 2), m_PlatformTexture);
+	m_Platform[1] = Entity(Vector2f(700, 460), Vector2f(2, 2), m_PlatformTexture);
+
+	fruits.push_back(Entity(Vector2f(350, 470), Vector2f(2, 2), m_AppleTexture));
+	fruits.push_back(Entity(Vector2f(400, 470), Vector2f(2, 2), m_BananasTexture));
+	fruits.push_back(Entity(Vector2f(450, 470), Vector2f(2, 2), m_CherriesTexture));
+	fruits.push_back(Entity(Vector2f(500, 470), Vector2f(2, 2), m_MelonTexture));
+	fruits.push_back(Entity(Vector2f(550, 470), Vector2f(2, 2), m_StrawberryTexture));
 
 	m_Bottom_PlatformOutline = Entity(Vector2f(450, 514), Vector2f(2, 2), m_Top_Bottom_OutlinePlatformTexture);
+}
+
+void AssertManager::GetFruitCollectedEffect(Vector2f p_Pos, Vector2f p_Scale)
+{
+	Entity temp = Entity(p_Pos, p_Scale, m_FruitsCollectedTexture);
+
+	fruitsCollectedEffect.push_back(temp);
+}
+
+std::vector<Entity>& AssertManager::GetFruits()
+{
+	return fruits;
 }
 
 void AssertManager::Update()
 {
 	m_Player.Update();
+
+	for(int i = 0; i < fruitsCollectedEffect.size(); i++)
+	{
+		if (!FruitsCollectedDestroyTimer.IsStarted())
+			FruitsCollectedDestroyTimer.Start();
+
+		if (FruitsCollectedDestroyTimer.GetTicks() * 0.001 >= 0.5)
+		{
+			fruitsCollectedEffect[i].Destroy();
+			fruitsCollectedEffect.erase(fruitsCollectedEffect.begin() + i);
+			FruitsCollectedDestroyTimer.Stop();
+		}
+	}
+
 }
 
 void AssertManager::Render(RenderWindow& window)
@@ -52,7 +87,19 @@ void AssertManager::Render(RenderWindow& window)
 	else
 		window.Render(m_Player, 0, m_Player.GetRendererFlip(), m_Player.GetDst());
 
-	window.Render(m_Platform, 0, SDL_FLIP_NONE, m_Platform.GetDst());
+	for (int i = 0; i < 2; i++)
+		window.Render(m_Platform[i], 0, SDL_FLIP_NONE, m_Platform[i].GetDst());
+	
+	for (int i = 0; i < fruits.size(); i++)
+		if (!fruits[i].IsDestroy())
+			window.RenderAnimate(fruits[i], 0, SDL_FLIP_NONE, fruits[i].GetDst());
+		
+
+	for (int i = 0; i < fruitsCollectedEffect.size(); i++)
+		if (!fruitsCollectedEffect[i].IsDestroy())
+			window.RenderAnimate(fruitsCollectedEffect[i], 0, SDL_FLIP_NONE, fruitsCollectedEffect[i].GetDst());
+		
+
 
 	window.Render(m_Bottom_PlatformOutline, 0, SDL_FLIP_NONE, m_Bottom_PlatformOutline.GetDst());
 	
