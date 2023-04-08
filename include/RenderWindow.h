@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 
 #include "Entity.h"
 #include "Timer.h"
@@ -16,7 +15,6 @@ public:
 	void clear();
 	void Render(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip, SDL_Rect& p_Dst);
 	void RenderAnimate(Entity& p_entity, float p_Angle, const SDL_RendererFlip p_Flip, SDL_Rect& p_Dst);
-	void RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor);
 	void display();
 
 	SDL_Renderer* GetRenderer();

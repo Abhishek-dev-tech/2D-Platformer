@@ -15,6 +15,22 @@ Entity::Entity(Vector2f p_pos, Vector2f p_scale, SDL_Texture* p_tex)
 	m_Dst.h = 0;
 
 	destroy = false;
+	maxDestroyTime = 0;
+}
+
+void Entity::Update()
+{
+	if (maxDestroyTime != 0)
+	{
+		if (!destroyTimer.IsStarted())
+			destroyTimer.Start();
+
+		if (destroyTimer.GetTicks() * 0.001 >= maxDestroyTime)
+		{
+			Destroy();
+			destroyTimer.Stop();
+		}
+	}
 }
 
 void Entity::UpdateTexture()
@@ -43,6 +59,11 @@ void Entity::SetScale(Vector2f _scale)
 void Entity::Destroy()
 {
 	destroy = true;
+}
+
+void Entity::Destroy(float p_Time)
+{
+	maxDestroyTime = p_Time;
 }
 
 void Entity::SetDestroyFalse()

@@ -35,23 +35,25 @@ void AssertManager::LoadTextures(RenderWindow& window)
 
 void AssertManager::SetEntity()
 {
-	m_Player = Player(Vector2f(300, 100), Vector2f(1.5, 1.5), m_PlayerIdleTexture);
+	m_Player = Player(Vector2f(100, 100), Vector2f(1.5, 1.5), m_PlayerIdleTexture);
 	
-	m_Platform[0] = Entity(Vector2f(150, 460), Vector2f(2, 2), m_PlatformTexture);
-	m_Platform[1] = Entity(Vector2f(700, 460), Vector2f(2, 2), m_PlatformTexture);
+	m_Platform[0] = Entity(Vector2f(75, 460), Vector2f(2, 2), m_PlatformTexture);
+	m_Platform[1] = Entity(Vector2f(850, 460), Vector2f(2, 2), m_PlatformTexture);
 
-	fruits.push_back(Entity(Vector2f(350, 470), Vector2f(2, 2), m_AppleTexture));
+	fruits.push_back(Entity(Vector2f(300, 470), Vector2f(2, 2), m_AppleTexture));
 	fruits.push_back(Entity(Vector2f(400, 470), Vector2f(2, 2), m_BananasTexture));
-	fruits.push_back(Entity(Vector2f(450, 470), Vector2f(2, 2), m_CherriesTexture));
-	fruits.push_back(Entity(Vector2f(500, 470), Vector2f(2, 2), m_MelonTexture));
-	fruits.push_back(Entity(Vector2f(550, 470), Vector2f(2, 2), m_StrawberryTexture));
+	fruits.push_back(Entity(Vector2f(500, 470), Vector2f(2, 2), m_CherriesTexture));
+	fruits.push_back(Entity(Vector2f(600, 470), Vector2f(2, 2), m_MelonTexture));
+	fruits.push_back(Entity(Vector2f(700, 470), Vector2f(2, 2), m_StrawberryTexture));
 
 	m_Bottom_PlatformOutline = Entity(Vector2f(450, 514), Vector2f(2, 2), m_Top_Bottom_OutlinePlatformTexture);
 }
 
 void AssertManager::GetFruitCollectedEffect(Vector2f p_Pos, Vector2f p_Scale)
 {
-	Entity temp = Entity(p_Pos, p_Scale, m_FruitsCollectedTexture);
+	Entity temp(p_Pos, p_Scale, m_FruitsCollectedTexture);
+
+	temp.Destroy(0.45);
 
 	fruitsCollectedEffect.push_back(temp);
 }
@@ -66,18 +68,8 @@ void AssertManager::Update()
 	m_Player.Update();
 
 	for(int i = 0; i < fruitsCollectedEffect.size(); i++)
-	{
-		if (!FruitsCollectedDestroyTimer.IsStarted())
-			FruitsCollectedDestroyTimer.Start();
-
-		if (FruitsCollectedDestroyTimer.GetTicks() * 0.001 >= 0.5)
-		{
-			fruitsCollectedEffect[i].Destroy();
-			fruitsCollectedEffect.erase(fruitsCollectedEffect.begin() + i);
-			FruitsCollectedDestroyTimer.Stop();
-		}
-	}
-
+		fruitsCollectedEffect[i].Update();
+	
 }
 
 void AssertManager::Render(RenderWindow& window)

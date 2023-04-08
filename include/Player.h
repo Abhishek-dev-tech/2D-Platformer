@@ -20,7 +20,6 @@ public:
 	void Update();
 	void Movement(int p_Dir);
 	void HandleEvent(SDL_Event event);
-	void Render(RenderWindow& window);
 	void ChangeAnimationState(AnimationState p_AnimationState);
 	void ChangeTextureBasedOnAnimation();
 	void SetPlayerGravity(float p_Gravity);

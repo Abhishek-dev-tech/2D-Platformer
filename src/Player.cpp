@@ -158,8 +158,3 @@ bool Player::IsPlayerGrounded()
 {
 	return m_Grounded;
 }
-
-void Player::Render(RenderWindow& window)
-{
-
-}

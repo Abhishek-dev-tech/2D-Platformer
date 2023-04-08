@@ -91,28 +91,9 @@ void RenderWindow::RenderAnimate(Entity& p_entity, float p_Angle, const SDL_Rend
 	SDL_RenderCopyEx(renderer, p_entity.getTex(), &m_AnimationSrc, &m_Dst, p_Angle, NULL, p_Flip);
 }
 
-void RenderWindow::RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor)
-{
-	SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, p_text.c_str(), textColor);
-	SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-
-	m_Src.x = 0;
-	m_Src.y = 0;
-	m_Src.w = surfaceMessage->w;
-	m_Src.h = surfaceMessage->h;
-
-	m_Dst.x = p_pos.x - m_Src.w / 2;
-	m_Dst.y = p_pos.y - m_Src.h / 2;
-	m_Dst.w = m_Src.w;
-	m_Dst.h = m_Src.h;
-
-	SDL_RenderCopy(renderer, message, &m_Src, &m_Dst);
-	SDL_FreeSurface(surfaceMessage);
-	SDL_DestroyTexture(message);
-}
-
 void RenderWindow::display()
 {
+	SDL_SetRenderDrawColor(renderer, 38, 100, 100, 255);
 	SDL_RenderPresent(renderer);
 }
 

@@ -14,7 +14,6 @@ void Game::Init()
 		isRunning = true;
 	else
 		isRunning = false;
-	TTF_Init();
 
 	AssertManager::GetInstance().LoadTextures(window);
 }
@@ -115,6 +114,5 @@ void Game::Render()
 void Game::Clean()
 {
 	window.cleanUp();
-	TTF_Quit();
 	SDL_Quit();
 }

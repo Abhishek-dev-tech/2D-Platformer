@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 
 #include "Mathf.h"
+#include "Timer.h"
 
 class Entity
 {
@@ -22,6 +23,7 @@ public:
 
 	void SetPos(Vector2f pos);
 	void SetScale(Vector2f scale);
+	void Update();
 	void Destroy();
 	void Destroy(float p_Time);
 	void SetDestroyFalse();
@@ -42,6 +44,10 @@ private:
 	SDL_Rect m_Dst;
 
 	SDL_Texture* tex;
+
+	Timer destroyTimer;
+
+	float maxDestroyTime;
 
 	bool destroy;
 };
