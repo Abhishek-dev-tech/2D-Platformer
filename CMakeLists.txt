@@ -8,7 +8,6 @@ add_subdirectory(external/SDL2)
 
 add_subdirectory(external/SDL_image)
 
-
 file(GLOB SOURCE_FILES src/*.cpp)
 file(GLOB HEADER_FILES include/*.h)
   
