@@ -3,7 +3,7 @@
 An 2D Platformer game created using C++ and [SDL2](https://www.libsdl.org/)
 
 ## Demo
-![](https://i.imgur.com/sNGBSOc.gif)
+![](https://i.imgur.com/WzKuuNI.gif)
 
 ## Build Instructions
 
